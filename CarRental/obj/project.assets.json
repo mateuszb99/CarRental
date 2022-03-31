@@ -6401,11 +6401,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\Mateusz\\source\\repos\\CarRental\\CarRental\\CarRental.csproj",
+      "projectUniqueName": "C:\\Users\\Mateusz\\source\\repos\\CarRentalSystem\\CarRental\\CarRental.csproj",
       "projectName": "CarRental",
-      "projectPath": "C:\\Users\\Mateusz\\source\\repos\\CarRental\\CarRental\\CarRental.csproj",
+      "projectPath": "C:\\Users\\Mateusz\\source\\repos\\CarRentalSystem\\CarRental\\CarRental.csproj",
       "packagesPath": "C:\\Users\\Mateusz\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\Mateusz\\source\\repos\\CarRental\\CarRental\\obj\\",
+      "outputPath": "C:\\Users\\Mateusz\\source\\repos\\CarRentalSystem\\CarRental\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
         "C:\\Users\\Mateusz\\AppData\\Roaming\\NuGet\\NuGet.Config",
