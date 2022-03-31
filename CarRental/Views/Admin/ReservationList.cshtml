@@ -1,0 +1,86 @@
+﻿@model IEnumerable<CarRental.Models.RezerwacjaSamochodu>
+
+
+@{
+    ViewData["Title"] = "Twoje rezerwację";
+}
+
+<div class="row">
+    <div class="col-md-8 offset-md-2">
+        @if (Model.Count() > 0)
+        {
+            <table class="table">
+                <thead>
+                    <tr class="align-middle">
+                        <th>Zdjęcie</th>
+                        <th>Wynajmujący</th>
+                        <th>Data wypożyczenia</th>
+                        <th>Nazwa pojazdu</th>
+                        <th>Koszt</th>
+                        <th>Opłacona</th>
+                        <th>Akcje</th>
+                    </tr>
+                </thead>
+                <tbody>
+
+
+                    @foreach (var item in Model)
+                    {
+                        var date = item.Data_Wypozyczenia.Value.ToString("dd/MM/yyyy");
+                    <tr>
+                        <td class="align-middle">
+                            <img src="~/Upload/images/@item.Zdjecie" alt="" style="max-width: 75px" />
+                        </td>
+                        <td class="align-middle">
+                            @Html.DisplayFor(modelItem => item.Uzytkownik)
+                        </td>
+                        <td class="align-middle">
+                            @Html.DisplayFor(modelItem => date)
+                        </td>
+                        <td class="align-middle">
+                            @Html.DisplayFor(modelItem => item.Nazwa)
+                        </td>
+                        <td class="align-middle">
+                            @Html.DisplayFor(modelItem => item.Koszt) zł
+                        </td>
+                        <td class="align-middle">
+                            <div>
+                                @using (Html.BeginForm("ReservationPayment", "Admin", new { id = item.Id }))
+                                {
+                                    @if (item.Oplacona != true)
+                                    {
+                                        <input type="submit" class="btn btn-info text-white" value="Zatwierdź" onclick="return confirm('Czy napewno chcesz zatwierdzić opłate tej rezerwacji?')" />
+                                    }
+                                    else
+                                    {
+                                        <p>Tak</p>
+                                    }
+                                }
+                            </div>
+                        </td>
+                        <td class="align-middle">
+                            <div class="d-flex justify-content-center">
+                                <div>
+                                    <a class="btn btn-outline-info" asp-route-id="@item.Samochod" asp-controller="Reservation" asp-action="ReservationDetails"><i class="bi bi-eye"></i>Podgląd </a>
+                                </div>
+                                <div>
+                                    @using (Html.BeginForm("DeleteReservation", "Admin", new { id = item.Id }))
+                                    {
+                                        <input type="submit" class="btn btn-danger text-white" value="Usuń" onclick="return confirm('Czy jesteś pewny że chcesz usunąć?')" />}
+                                </div>
+                            </div>
+                        </td>
+                    </tr>
+
+                    }
+
+                </tbody>
+            </table>
+        }
+        else
+        {
+            <p>Twoję rezerwacje są puste</p>
+        }
+    </div>
+</div>
+

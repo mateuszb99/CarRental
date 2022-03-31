@@ -1,0 +1,59 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+@{
+    ViewData["Title"] = "Strona Główna";
+}
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+    <meta name="description" content="" />
+    <meta name="author" content="" />
+    <title>Business Frontpage - Start Bootstrap Template</title>
+    <link rel="icon" type="image/x-icon" href="assets/favicon.ico" />
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.4.1/font/bootstrap-icons.css" rel="stylesheet" />
+    <link href="css/styles.css" rel="stylesheet" />
+</head>
+<body>
+    <header class="bg-dark py-5">
+        <div class="container px-5">
+            <div class="row gx-5 justify-content-center">
+                <div class="col-lg-6">
+                    <div class="text-center my-5">
+                        <h1 class="display-5 fw-bolder text-white mb-2">Wypożyczalnia samochodów online!</h1>
+                        <p class="lead text-white-50 mb-4">Szybko i sprawnie wypożycz samochód jakiego potrzebujesz!</p>
+                        <div class="d-grid gap-3 d-sm-flex justify-content-sm-center">
+                            <a class="btn btn-primary btn-lg px-4 me-sm-3" asp-area="" asp-controller="Account" asp-action="Login">Zaloguj się</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+    <section class="py-5 border-bottom" id="features">
+        <div class="container px-5 my-5">
+            <div class="row gx-5">
+                <div class="col-lg-4 mb-5 mb-lg-0">
+                    <div class="feature bg-primary bg-gradient text-white rounded-3 mb-3"><i class="bi bi-card-list"></i></div>
+                    <h2 class="h4 fw-bolder">Przeglądaj oferty</h2>
+                    <p>Jesteś w trakcie poszukiwanań samochodu do wypożyczenia? Spójrz na naszą ofertę, napewno znajdziesz coś dla siebie.</p>
+                    <a asp-area="" asp-controller="Reservation" asp-action="Reservation"><i class="bi bi-card-list"></i>   Samochody</a>
+
+                </div>
+                <div class="col-lg-4 mb-5 mb-lg-0">
+                    <div class="feature bg-primary bg-gradient text-white rounded-3 mb-3"><i class="bi bi-patch-question"></i></div>
+                    <h2 class="h4 fw-bolder">Masz jakieś pytania?</h2>
+                    <p>Jeżeli chcesz zadać nam jakieś pytanie, to możesz to zrobić poprzez dedykowany formularz.</p>
+                    <a asp-area="" asp-controller="QuestionForm" asp-action="CreateQuestionForm"><i class="bi bi-patch-question"></i>   Masz pytanie?</a>
+                </div>
+                <div class="col-lg-4">
+                    <div class="feature bg-primary bg-gradient text-white rounded-3 mb-3"><i class="bi bi-file-person-fill"></i></div>
+                    <h2 class="h4 fw-bolder">Utwórz swoje konto!</h2>
+                    <p>Żeby wypożyczyć samochód musisz utworzyć swoje konto, rejestracja jest bardzo prosta.</p>
+                    <br />
+                    <a asp-area="" asp-controller="Account" asp-action="Register"><i class="bi bi-file-person-fill"></i>Utwórz konto</a>
+                </div>
+            </div>
+        </div>
+    </section>
+</body>
+</html>

@@ -1,0 +1,143 @@
+﻿@model IEnumerable<CarRental.Models.Samochod>
+@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+
+*@
+<style>
+   #button1 {
+        position: absolute;
+        bottom: 20px;
+        right: 20px;
+        font-size: 16px;
+    }
+
+    #opis {
+        min-width: 1000px;
+    }
+
+    #sekcja {
+        position: absolute;
+        bottom: 100px;
+        right: 30px;
+        font-size: 16px;
+    }
+
+    .search-bar {
+        height: 46px;
+        border-radius: 48px;
+        border: 0.5px solid lightgrey;
+        width: 100%;
+        padding-right: 40px;
+        padding-left: 10px;
+    }
+</style>
+@{
+    ViewData["Title"] = "Lista samochodów";
+    var error = TempData["Error"] as string; }
+<div class="row">
+    <div class="search" style="margin: auto">
+        <form method="get" asp-action="Reservation">
+            <div>
+                <input type="search" class="search-bar" placeholder="Czego szukasz? " value="@ViewData["Getauctiondetails"]" name="AucSearch" style="width:380px;" />
+                @using (Html.BeginForm("Index", "Aukcje", FormMethod.Get))
+                {
+                    @Html.DropDownList("SecSearch", new SelectList(ViewBag.Sekcja), "Wybierz sekcje", new { @class = "btn btn-secondary" })}
+                <input type="submit" value="Szukaj" class="btn btn-outline-primary" />
+
+                <button type="submit" value="@ViewData["PriceSortParam"]" name="SortOrder" class="btn btn-secondary"><b>Cena</b></button>
+                <a class="btn btn-primary" asp-action="Reservation">Pokaż wszystkie</a>
+
+            </div>
+            <br />
+        </form>
+    </div>
+    @if (Model.Count() > 0)
+    {
+
+        @foreach (var item in Model)
+        {
+            string a = item.Id + "img";
+            string b = item.Id + "modal";
+            string c = item.Id + "modalimg";
+            int length = item.Cena.ToString().Length - 1;
+            string price = "";
+            for (int i = 0; i <= length; i++)
+            {
+                if (i % 3 == 0 && i > 3)
+                {
+                    price = price + " ";
+                    price = price + item.Cena.ToString()[length - i];
+                }
+                else
+                {
+                    price = price + item.Cena.ToString()[length - i];
+                }
+            }
+            char[] stringArray = price.ToCharArray();
+            Array.Reverse(stringArray);
+            string reverseString = new string(stringArray);
+
+            <div class="col-md-7 col-xs-1 border-primary mb-3" style="margin:auto">
+                <div class="card mb-3">
+                    <div class="row g-0">
+                        <div class="col-md-12">
+                            <div class="card-header text-white bg-info" style="height: 70px;" >
+                                <p class="card-text">
+                                    <h5 class="card-title">
+                                        @item.Marka @item.Model
+                                        @if (User.IsInRole("A"))
+                                        {
+                                            <a class="text-white float-right" asp-controller="Admin" asp-action="Edit" asp-route-id="@item.Id"><i class="bi bi-pencil-square"></i></a>
+                                        }
+                                    </h5>
+                                </p>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <img src="~/Upload/images/@item.Zdjecie" width="400px" alt="">
+                        </div>
+                        <div class="col-md-6">
+                            <div class="card-body">
+                                <p class="card-text"><b>Rocznik: </b>@item.Rocznik</p>
+                                <p class="card-text"><b>Rodzaj nadwozia: </b>@item.Rodzaj_Nadwozia</p>
+                                <p class="card-text"><b>Kolor: </b>@item.Kolor</p>
+                                <p class="card-text"><b>Liczba miejsc: </b>@item.Liczba_Miejsc</p>
+                                <p class="card-text ">
+                                    <b>Status: </b>
+                                    @if (DateTime.Now >= item.Data_Wypozyczenia && DateTime.Now <= item.Data_Oddania || item.Data_Oddania == null)
+                                    {
+                                        <span class="badge bg-success text-white">Dostępny</span>
+                                    }
+                                    else if (DateTime.Now > item.Data_Oddania)
+                                    {
+                                        <span class="badge bg-danger text-white">Niedostepny</span>
+                                    }
+                                    else
+                                    {
+                                        <span class="badge bg-primary text-white">UPCOMING</span>
+                                    }
+                                </p>
+
+                            </div>
+                        </div>
+                        <div class="col-md-12">
+                            <div class="card-footer ">
+                                <p class="card-text">
+                                    <a class="btn btn-outline-primary float-right" asp-action="ReservationDetails" asp-route-id="@item.Id">
+                                        <i class="bi bi-eye-fill"></i> Pokaż szczegóły
+                                    </a>
+                                    <a class="btn btn-success text-white @((DateTime.Now > item.Data_Oddania) ? "disabled" : "")">
+                                        <i class="bi bi-cart-plus"></i> Już od @reverseString zł za dzień
+                                    </a>
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+    }
+}
+else
+{
+    <p>Brak aktualnych aukcji</p>
+}

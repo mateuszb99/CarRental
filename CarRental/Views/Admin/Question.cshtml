@@ -1,0 +1,56 @@
+﻿@model IEnumerable<CarRental.Models.Pytanie>
+<div class="row">
+    <div class="col-md-8 offset-md-2">
+
+        <table class="table">
+            <thead>
+                <tr class="align-middle">
+                    <th>Id</th>
+                    <th>Tytuł</th>
+                    <th>Treść</th>
+                    <th>Imię i Nazwisko</th>
+                    <th>Numer kontakowy</th>
+                    <th>Email</th>
+                    <th>Akcje</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model)
+                {
+                <tr>
+                    <td class="align-middle">
+                        @Html.DisplayFor(modelItem => item.Id)
+                    </td>
+                    <td class="align-middle">
+                        @Html.DisplayFor(modelItem => item.Tytulu)
+                    </td>
+                    <td class="align-middle">
+                        <textarea disabled rows="2">@Html.DisplayFor(modelItem => item.Tresc)</textarea>
+                    </td>
+                    <td class="align-middle">
+                        @Html.DisplayFor(modelItem => item.Imie)
+                        @Html.DisplayFor(modelItem => item.Nazwisko)
+                    </td>
+                    <td class="align-middle">
+                        @Html.DisplayFor(modelItem => item.Numer_Kontaktowy)
+                    </td>
+                    <td class="align-middle">
+                        @Html.DisplayFor(modelItem => item.Email)
+                    </td>
+
+                    <td class="align-middle">
+                        <div class="d-flex justify-content-center">
+                            <div>
+                                @using (Html.BeginForm("DeleteQuestion", "Admin", new { id = item.Id }))
+                                {
+                <input type="submit" class="btn btn-danger text-white" value="Usuń" onclick="return confirm('Czy jesteś pewny że chcesz usunąć')" />}
+                            </div>
+                        </div>
+                    </td>
+                </tr>}
+            </tbody>
+
+        </table>
+
+    </div>
+</div>

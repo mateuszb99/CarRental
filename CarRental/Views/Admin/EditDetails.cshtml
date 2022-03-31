@@ -1,0 +1,129 @@
+﻿@model CarRental.Models.Samochod
+@{
+    ViewData["Title"] = "Stwórz aukcję";
+    var error = TempData["Error"] as string;
+}
+<body>
+    <script src="~/js/site.js" type="text/javascript"></script>
+    @if (ViewBag.Success != null && ViewBag.Success)
+    {
+        <h2 class="alert-success text-center" style="padding:15px;">Dodano samochód!</h2>
+    }
+    @if (!string.IsNullOrEmpty(error))
+    {
+        <h2 class="alert-danger text-center" style="padding:15px;">@error</h2>;
+    }
+<style>
+    .return {
+        text-align: center;
+        padding: 20px 0 0;
+    }
+</style>
+    <div class="global-container">
+        <div class="card-body">
+            <div class="card-body col-md-9" style="margin:auto">
+                <h3 class="card-title text-center"> Edytuj aukjcję </h3>
+                <div class="card-text">
+                    <form method="post" enctype="multipart/form-data" asp-controller="Admin" asp-action="UpdateData">
+                        <input type="hidden" asp-for="Id" />
+                        <div class="form-group text-center">
+                            <label for="fname">Marka</label>
+                            <input asp-for="Marka" placeholder="Marka" class="form-control" />
+                            <span asp-validation-for="Marka" class="text-danger"></span>
+                        </div>
+                        <div class="form-group text-center">
+                            <label for="fname">Modelu</label>
+                            <input asp-for="Model" placeholder="Model" class="form-control" />
+                            <span asp-validation-for="Model" class="text-danger"></span>
+                        </div>
+                        <div class="form-group text-center">
+                            <label for="fname">Rocznik</label>
+                            <input asp-for="Rocznik" placeholder="Rocznik" class="form-control" />
+                            <span asp-validation-for="Rocznik" class="text-danger"></span>
+                        </div>
+                        <div class="form-group text-center">
+                            <label for="fname">Kolor</label>
+                            <input asp-for="Kolor" placeholder="Kolor" class="form-control" />
+                            <span asp-validation-for="Kolor" class="text-danger"></span>
+                        </div>
+                        <div class="form-group text-center">
+                            <label for="fname">Opis</label>
+                            <input asp-for="Opis" placeholder="Opis Przedmiotu" class="form-control" />
+                            <span asp-validation-for="Opis" class="text-danger"></span>
+                        </div>
+                        <div class="form-group text-center">
+                            <label for="fname">Sekcja</label>
+                                                       <select class="form-control" id="Rodzaj_Nadwozia" name="Rodzaj_Nadwozia" asp-for="Rodzaj_Nadwozia" placeholder="Wybierz rodzaj nadwozia">
+                                <option disabled selected value="Wybierz sekcję">Wybierz rodzaj nadwozia</option>
+                                <option value="Auta małe">Auta małe</option>
+                                <option value="Auta miejskie">Auta miejskie</option>
+                                <option value="Coupe">Coupe</option>
+                                <option value="Kabriolet">Kabriolet</option>
+                                <option value="Kombi">Kombi</option>
+                                <option value="Kompakt">Kompakt</option>
+                                <option value="Minivan">Minivan</option>
+                                <option value="Sedan">Sedan</option>
+                                <option value="SUV">SUV</option>
+                            </select>
+                            <span asp-validation-for="Rodzaj_Nadwozia" class="text-danger"></span>
+                        </div>
+                        <div class="form-group text-center">
+                            <label for="fname">Rodzaj Skrzyni Biegow</label>
+                            <select class="form-control" id="Rodzaj_Skrzyni_Biegow" name="Rodzaj_Skrzyni_Biegow" asp-for="Rodzaj_Skrzyni_Biegow" placeholder="Wybierz rodzaj skrzyni biegów">
+                                <option disabled selected value="Wybierz sekcję">Wybierz rodzaj skrzyni biegów</option>
+                                <option value="Automatyczna">Automatyczna</option>
+                                <option value="Manualna">Manualna</option>
+                            </select>
+                            <span asp-validation-for="Rodzaj_Skrzyni_Biegow" class="text-danger"></span>
+                        </div>
+                        <div class="form-group text-center">
+                            <label for="fname">Rodzaj Paliwa</label>
+                            <select class="form-control" id="Rodzaj_Paliwa" name="Rodzaj_Paliwa" asp-for="Rodzaj_Paliwa" placeholder="Wybierz rodzaj paliwa">
+                                <option disabled selected value="Wybierz sekcję">Wybierz rodzaj paliwa</option>
+                                <option value="Benzyna">Benzyna</option>
+                                <option value="Benzyna+LPG">Benzyna+LPG</option>
+                                <option value="Diesiel">Diesiel</option>
+                                <option value="Elektryczny">Elektryczny</option>
+
+                            </select>
+                            <span asp-validation-for="Rodzaj_Paliwa" class="text-danger"></span>
+                        </div>
+                        <div class="form-group text-center">
+                            <label for="fname">Moc</label>
+                            <input asp-for="Moc" placeholder="Moc" class="form-control" />
+                            <span asp-validation-for="Moc" class="text-danger"></span>
+                        </div>
+                        <div class="form-group text-center">
+                            <label for="fname">Liczba Miejsc</label>
+                            <input asp-for="Liczba_Miejsc" placeholder="Liczba_Miejsc" class="form-control" />
+                            <span asp-validation-for="Liczba_Miejsc" class="text-danger"></span>
+                        </div>
+                        <div class="form-group text-center">
+                            <label for="fname">Liczba Drzwi</label>
+                            <input asp-for="Liczba_Drzwi" placeholder="Liczba_Drzwi" class="form-control" />
+                            <span asp-validation-for="Liczba_Drzwi" class="text-danger"></span>
+                        </div>
+                        <div class="form-group text-center">
+                            <label for="fname">Cena</label>
+                            <input asp-for="Cena" placeholder="Cena" class="form-control" />
+                            <span asp-validation-for="Cena" class="text-danger"></span>
+                        </div>
+
+                        <div class="form-group text-center">
+                            <label for="fname">Zdjęcie</label>
+                            <input type="file" asp-for="Pliki" accept="image/*" class="form-control" />
+                            <span asp-validation-for="Pliki" class="text-danger"></span>
+                        </div>
+                        <div class="form-group">
+                            <button type="submit" class="form-control btn btn-primary rounded submit px-3" value="create"> Zapisz zmiany </button>
+                        </div>
+                        <div class="return">
+                            <a asp-area="" asp-controller="Admin" asp-action="Edit"> Cofnij </a>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</body>

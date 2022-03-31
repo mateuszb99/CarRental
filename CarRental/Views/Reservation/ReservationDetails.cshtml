@@ -1,0 +1,209 @@
+﻿@model CarRental.Models.Samochod
+
+@{ ViewData["Title"] = "Rezerwacja";
+    var error = TempData["Error"] as string;
+    var success = TempData["Success"] as string;}
+@if (ViewBag.Success != null && ViewBag.Success)
+{
+<h2 class="alert-success text-center" style="padding:15px;">Rezerwacja przebiegła poprawnie!</h2>}
+@if (ViewBag.InfoSuccess != null && ViewBag.InfoSuccess)
+{
+<h2 class="alert-info text-center" style="padding:15px;">Termin dostępny!</h2>}
+<style>
+    body {
+        background: #fff;
+    }
+
+    .card {
+        background: #f7f7ff;
+        position: relative;
+        display: flex;
+        flex-direction: column;
+        min-width: 0;
+        word-wrap: break-word;
+        background-color: #fff;
+        background-clip: border-box;
+        border: 0 solid transparent;
+        border-radius: .25rem;
+        margin-bottom: 1.5rem;
+        box-shadow: 0 2px 6px 0 rgb(218 218 253 / 65%), 0 2px 6px 0 rgb(206 206 238 / 54%);
+    }
+
+    .me-2 {
+        margin-right: .5rem !important;
+    }
+
+    .column {
+        float: left;
+        width: 45%;
+    }
+
+    .column1 {
+        float: left;
+        width: 10%;
+    }
+
+    /* Clear floats after the columns */
+    .row:after {
+        content: "";
+        display: table;
+        clear: both;
+    }
+</style>
+
+
+
+@if (!string.IsNullOrEmpty(error))
+{
+<h2 class="alert-danger text-center" style="padding:15px;">@error</h2>;
+}
+@if (Model != null)
+{
+<div>
+    <div class="container">
+        <div class="main-body">
+            <div class="row">
+                <div class="col-lg-4">
+                    <div class="card">
+                        <script src="~/js/site.js" type="text/javascript"></script>
+                        <div class="d-flex flex-column align-items-center text-center">
+                            <img style="width:340px;" src="~/Upload/images/@Model.Zdjecie" alt="Image_wallpaper" />
+                            <div class="mt-3">
+                                @if (Model.Dostepny == true)
+                                {
+                            <p>Wybierz date<br><b></b></p>}
+                            <form asp-action="MakeReservation" method="post">
+                                <input type="hidden" asp-for="Cena" />
+                                <input type="hidden" asp-for="Id" />
+                                <input type="hidden" asp-for="Zdjecie" />
+                                <input type="hidden" asp-for="Model" />
+                                <input type="hidden" asp-for="Marka" />
+                                <input type="hidden" asp-for="Rocznik" />
+
+                                @if (Model.Dostepny == true)
+                                {
+                            <input id='mydate' type="date" class="form-control text-center" placeholder="Wybierz date" asp-for="Data_Wypozyczenia" onchange="validateDate()" /> <br>
+                                    <div class="col-md-12">
+                                    <div class="btn btn-info text-white">
+                                        <i class="bi bi-cart-plus"></i> Już od @Model.Cena zł za dzień 
+                                    </div>
+                        </div><br>
+                                                <button type="submit" class="btn btn-primary" style="width: 150px;" value="zarezerwuj" onclick="return confirm('Czy jesteś pewny że chcesz zarezerwować pojaz na ten dzień?')">Zarezerwuj !</button>}
+                            </form>
+                            </div>
+                            <br />
+                        </div>
+
+                    </div>
+                </div>
+                <div class="col-lg-8">
+                    <div class="card">
+                        <div class="card-body align-items-center" style="background:#f7f7ff">
+                            <div class="d-flex align-items-center row mb-3">
+                                <div class="col-sm-3">
+                                    <h6 class="mb-0">Marka i model:</h6>
+                                </div>
+                                <div class="col-sm-9 text-secondary">
+                                    <input disabled value="@Model.Marka @Model.Model @Model.Rocznik" class="form-control" />
+                                </div>
+                            </div>
+                            <div class="d-flex align-items-center row mb-3">
+                                <div class="col-sm-3">
+                                    <h6 class="mb-0">Opis samochodu:</h6>
+                                </div>
+                                <div class="col-sm-9 text-secondary">
+                                    <textarea disabled class="form-control" rows="4">@Model.Opis</textarea>
+                                </div>
+                            </div>
+                            <div class="column">
+                                <div class="d-flex align-items-center row mb-3">
+                                    <div class="col-sm-8">
+                                        <h6 class="mb-0">Typ Paliwa</h6>
+                                    </div>
+                                    <div class="col-sm-9 text-secondary">
+                                        <input disabled class="form-control" value="@Model.Rodzaj_Paliwa" />
+                                    </div>
+                                </div>
+                                <div class="d-flex align-items-center row mb-3">
+                                    <div class="col-sm-8">
+                                        <h6 class="mb-0">Skrzynia biegów</h6>
+                                    </div>
+                                    <div class="col-sm-9 text-secondary">
+                                        <input class="form-control" disabled value="@Model.Rodzaj_Skrzyni_Biegow" placeholder="Brak danych" />
+                                    </div>
+                                </div>
+                                <div class="d-flex align-items-center row mb-3">
+                                    <div class="col-sm-8">
+                                        <h6 class="mb-0">Nadwozie</h6>
+                                    </div>
+                                    <div class="col-sm-9 text-secondary">
+                                        <input disabled class="form-control" value="@Model.Rodzaj_Nadwozia" />
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="column1">
+                                <div class="d-flex align-items-center row mb-3">
+                                    <div class="col-sm-3">
+                                    </div>
+                                    <div class="col-sm-9 text-secondary">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="column">
+                                <div class="d-flex align-items-center row mb-3">
+                                    <div class="col-sm-8">
+                                        <h6 class="mb-0">Moc</h6>
+                                    </div>
+                                    <div class="col-sm-9 text-secondary">
+                                        <input disabled class="form-control" value="@Model.Moc" />
+                                    </div>
+                                </div>
+                                <div class="d-flex align-items-center row mb-3">
+                                    <div class="col-sm-8">
+                                        <h6 class="mb-0">Liczba drzwi</h6>
+                                    </div>
+                                    <div class="col-sm-9 text-secondary">
+                                        <input disabled class="form-control" value="@Model.Liczba_Drzwi" />
+                                    </div>
+                                </div>
+                                <div class="d-flex align-items-center row mb-3">
+                                    <div class="col-sm-8">
+                                        <h6 class="mb-0">Liczba miejsc</h6>
+                                    </div>
+                                    <div class="col-sm-9 text-secondary">
+                                        <input disabled class="form-control" value="@Model.Liczba_Drzwi" />
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-12">
+                            <div class="card">
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div> }
+else
+{
+<p>Dana aukcja została zakończona</p>}
+
+<script>
+
+    function validateDate() {
+        var userdate = new Date(document.getElementById("mydate").value);
+        var today = new Date();
+        var todayForComparison = new Date(today.getFullYear(), today.getMonth(), today.getDate(), 23, 59, 59);
+
+        if (userdate < todayForComparison) {
+
+            alert('Data nie może być przeszła');
+        }
+    }
+</script>

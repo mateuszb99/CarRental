@@ -1,0 +1,73 @@
+﻿@model IEnumerable<CarRental.Models.Samochod>
+
+@{
+    ViewData["Title"] = "Lista ogłoszeń";
+}
+
+<div class="row">
+    <div class="col-md-8 offset-md-2">
+
+        <table class="table">
+            <thead>
+                <tr class="align-middle">
+                    <th>Numer</th>
+                    <th>Zdjęcie</th>
+                    <th>Nazwa pojazdu</th>
+                    <th>Kolor</th>
+                    <th>Dostępny</th>
+                    <th>Akcje</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model)
+                {
+                <tr>
+                    <td class="align-middle">
+                        @Html.DisplayFor(modelItem => item.Id)
+                    </td>
+                    <td class="align-middle">
+                        <img src="~/Upload/images/@item.Zdjecie" alt="" style="max-width: 150px" />
+                    </td>
+                    <td class="align-middle">
+                        @Html.DisplayFor(modelItem => item.Marka)
+                        @Html.DisplayFor(modelItem => item.Model)
+                    </td>
+                    <td class="align-middle">
+                        @Html.DisplayFor(modelItem => item.Kolor)
+                    </td>
+                    <td class="align-middle">
+                        <div>
+                            @using (Html.BeginForm("ChangeStatus", "Admin", new { id = item.Id }))
+                            {
+                                @if (item.Dostepny == true)
+                                {
+                                    <input type="submit" class="btn btn-success text-white" value="ON" onclick="return confirm('Czy napewno chcesz zmienić status ogłoszenia?')" />
+                                }
+                                else
+                                {
+                                    <input type="submit" class="btn btn-danger text-white" value="OFF" onclick="return confirm('Czy napewno chcesz zmienić status ogłoszenia?')" />
+                                }
+                            }
+                        </div>
+                    </td>
+                    <td class="align-middle">
+                        <div class="d-flex justify-content-center">
+                            <div>
+                                <a class="btn btn-outline-primary" asp-route-id="@item.Id" asp-controller="Admin" asp-action="EditDetails"><i class="bi bi-pencil-square"></i>Edytuj </a>
+                            </div>
+                            <div>
+                                <a class="btn btn-outline-info" asp-route-id="@item.Id" asp-controller="Reservation" asp-action="ReservationDetails" ><i class="bi bi-eye"></i>Podgląd </a>
+                            </div>
+                            <div>
+                                @using (Html.BeginForm("DeletePost", "Admin", new { id = item.Id }))
+                                {
+                                    <input type="submit" class="btn btn-danger text-white" value="Usuń" onclick="return confirm('Czy jesteś pewny że chcesz usunąć?')" />}
+                            </div>
+                        </div>
+                    </td>
+                </tr>                   
+                }
+            </tbody>
+        </table>
+    </div>
+</div>

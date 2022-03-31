@@ -1,0 +1,58 @@
+﻿@model CarRental.Models.Pytanie
+@{ ViewData["Title"] = "Pytanie"; }
+<style>
+    .return {
+        text-align: center;
+        padding: 20px 0 0;
+    }
+</style>
+<body>
+    @if (ViewBag.Success != null && ViewBag.Success)
+    {
+        <h2 class="alert-success" style="padding:15px;">Pytanie zostało wysłane!</h2>}
+    <div class="global-container">
+            <div class="card-body col-md-7" style="margin: auto">
+                <h3 class="card-title text-center"> Wyślij zgłoszenie </h3>
+                <div class="card-text">
+                    <form method="post" asp-controller="QuestionForm" asp-action="CreateQuestionForm">
+                        <div class="form-group text-center">
+                            <input asp-for="Tytulu" placeholder="Tytuł" class="form-control" />
+                            <span asp-validation-for="Tytulu" class="text-danger"></span>
+                        </div>
+                        <div class="form-group text-center">
+                            <input asp-for="Tresc" placeholder="Treść" class="form-control" />
+                            <span asp-validation-for="Tresc" class="text-danger"></span>
+                        </div>
+                        <div class="form-group text-center">
+                            <input asp-for="Imie" placeholder="Imie" class="form-control" />
+                            <span asp-validation-for="Imie" class="text-danger"></span>
+                        </div>
+                        <div class="form-group text-center">
+                            <input asp-for="Nazwisko" placeholder="Nazwisko" class="form-control" />
+                            <span asp-validation-for="Nazwisko" class="text-danger"></span>
+                        </div>
+                        <div class="form-group text-center">
+                            <input asp-for="Numer_Kontaktowy" placeholder="Numer Kontaktowy" class="form-control" id="phone" onkeypress="return isNumberKey(event)" maxlength="9" />
+                            <span asp-validation-for="Numer_Kontaktowy" class="text-danger"></span>
+                        </div>
+                        <div class="form-group text-center">
+                            <input asp-for="Email" placeholder="Email" class="form-control" />
+                            <span asp-validation-for="Email" class="text-danger"></span>
+                        </div>
+
+                        <button type="submit" class="btn btn-primary btn-block" value="createQuestionForm"> Utwórz </button>
+
+                        <div class="return">
+                            <a asp-area="" asp-controller="Home" asp-action="Index"> Cofnij </a>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+</body>
+
+<script>
+    document.getElementById('phone').addEventListener('blur', function (e) {
+        var x = e.target.value.replace(/\D/g, '').match(/(\d{3})(\d{3})(\d{3})/);
+        e.target.value = x[1] + ' ' + x[2] + ' ' + x[3];
+    });</script>
